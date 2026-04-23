@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bx6se8i20qa2f" path="res://scenes/paddle.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://t58063w8xqwt" path="res://scripts/level.gd" id="1_w8frs"]
 [ext_resource type="PackedScene" uid="uid://b6lnxt3usn2fa" path="res://scenes/ball.tscn" id="2_w7c3h"]
+[ext_resource type="Texture2D" uid="uid://cqdslh2n3ut56" path="res://assets/background.jpg" id="4_mx8sn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w7c3h"]
 size = Vector2(20, 1094)
@@ -39,3 +40,8 @@ shape = SubResource("RectangleShape2D_w8frs")
 position = Vector2(956.5, 0)
 rotation = -0.00041230273
 shape = SubResource("RectangleShape2D_mx8sn")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=825774877]
+z_index = -2
+position = Vector2(959, 537)
+texture = ExtResource("4_mx8sn")
