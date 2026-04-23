@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://cxr3m1ph3qun4"]
+
+[ext_resource type="PackedScene" uid="uid://bx6se8i20qa2f" path="res://scenes/paddle.tscn" id="1_2q6dc"]
+[ext_resource type="Script" uid="uid://t58063w8xqwt" path="res://scripts/level.gd" id="1_w8frs"]
+[ext_resource type="PackedScene" uid="uid://b6lnxt3usn2fa" path="res://scenes/ball.tscn" id="2_w7c3h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w7c3h"]
+size = Vector2(20, 1094)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w8frs"]
+size = Vector2(20, 1091)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mx8sn"]
+size = Vector2(1933, 20)
+
+[node name="Level" type="Node2D" unique_id=934921851]
+script = ExtResource("1_w8frs")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=667453969]
+position = Vector2(960, 543)
+
+[node name="paddle" parent="." unique_id=1238660706 instance=ExtResource("1_2q6dc")]
+position = Vector2(982, 971)
+
+[node name="Ball" parent="." unique_id=47705054 instance=ExtResource("2_w7c3h")]
+position = Vector2(1142, 769)
+
+[node name="Walls" type="StaticBody2D" parent="." unique_id=452302689]
+
+[node name="Left Wall" type="CollisionShape2D" parent="Walls" unique_id=1870407911]
+position = Vector2(0, 537)
+shape = SubResource("RectangleShape2D_w7c3h")
+
+[node name="Right Wall" type="CollisionShape2D" parent="Walls" unique_id=370463047]
+position = Vector2(1918, 544)
+shape = SubResource("RectangleShape2D_w8frs")
+
+[node name="Ceiling" type="CollisionShape2D" parent="Walls" unique_id=1739958239]
+position = Vector2(956.5, 0)
+rotation = -0.00041230273
+shape = SubResource("RectangleShape2D_mx8sn")
