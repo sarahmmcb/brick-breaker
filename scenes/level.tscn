@@ -14,6 +14,9 @@ size = Vector2(20, 1091)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mx8sn"]
 size = Vector2(1933, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ppgk2"]
+size = Vector2(1898.5, 20)
+
 [node name="Level" type="Node2D" unique_id=934921851]
 script = ExtResource("1_w8frs")
 
@@ -42,6 +45,15 @@ rotation = -0.00041230273
 shape = SubResource("RectangleShape2D_mx8sn")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=825774877]
+modulate = Color(1, 1, 1, 0.54901963)
 z_index = -2
 position = Vector2(959, 537)
 texture = ExtResource("4_mx8sn")
+
+[node name="DeathZone" type="Area2D" parent="." unique_id=1315340793]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone" unique_id=179476285]
+position = Vector2(957, 1095)
+shape = SubResource("RectangleShape2D_ppgk2")
+
+[connection signal="body_entered" from="DeathZone" to="Ball" method="_on_death_zone_body_entered"]
