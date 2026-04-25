@@ -21,7 +21,7 @@ func _physics_process(delta: float) -> void:
 			velocity.y = -200
 		
 		# if we're stuck moving up and down, bump it to the side a bit
-		if velocity.x == 0:
+		if abs(velocity.x) < 10:
 			velocity.x = -200
 	
 
@@ -30,5 +30,5 @@ func game_over():
 	GameManager.score = 0
 	
 
-func _on_death_zone_body_entered(body: Node2D) -> void:
-	game_over()
+func _on_death_zone_body_entered(_body: Node2D) -> void:
+	call_deferred("game_over")

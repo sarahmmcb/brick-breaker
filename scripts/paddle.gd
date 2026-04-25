@@ -9,7 +9,7 @@ func _ready():
 	vertical_position = viewport_size.y - 100
 	position.y = vertical_position
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if position.y != vertical_position:
 		position.y = vertical_position
 
