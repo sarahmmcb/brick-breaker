@@ -5,6 +5,7 @@ var dir := Vector2.DOWN
 var is_active := true
 
 func _ready() -> void:
+	speed = speed + (20 * GameManager.level)
 	velocity = Vector2(speed * -1, speed)
 	
 func _physics_process(delta: float) -> void:
@@ -26,8 +27,8 @@ func _physics_process(delta: float) -> void:
 	
 
 func game_over():
-	get_tree().reload_current_scene()
 	GameManager.score = 0
+	get_tree().reload_current_scene()
 	
 
 func _on_death_zone_body_entered(_body: Node2D) -> void:

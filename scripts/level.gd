@@ -12,6 +12,11 @@ func _ready() -> void:
 
 
 func setup_level():
+	
+	rows = 2 + GameManager.level
+	if rows > 7:
+		rows = 7
+	
 	var colors = get_colors()
 	colors.shuffle()
 	for r in rows:

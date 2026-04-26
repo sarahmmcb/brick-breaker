@@ -6,6 +6,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0w5h4"]
 size = Vector2(72, 72)
 
+[sub_resource type="Gradient" id="Gradient_0w5h4"]
+offsets = PackedFloat32Array(0.8419689, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
 [node name="Brick" type="RigidBody2D" unique_id=1310378136 groups=["Brick"]]
 gravity_scale = 0.0
 script = ExtResource("1_0w5h4")
@@ -16,3 +20,20 @@ texture = ExtResource("1_5l4w1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1362499401]
 shape = SubResource("RectangleShape2D_0w5h4")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=335148085]
+emitting = false
+amount = 50
+lifetime = 0.64
+one_shot = true
+preprocess = 0.5
+randomness = 1.0
+draw_order = 1
+emission_shape = 3
+emission_rect_extents = Vector2(40, 40)
+gravity = Vector2(0, -500)
+linear_accel_min = 0.1
+linear_accel_max = 0.1
+scale_amount_min = 0.0
+scale_amount_max = 2.0
+color_ramp = SubResource("Gradient_0w5h4")
