@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c32706rlkyi5q" path="res://scripts/brick.gd" id="1_0w5h4"]
 [ext_resource type="Texture2D" uid="uid://fbp6dt6lefu4" path="res://assets/brick.png" id="1_5l4w1"]
+[ext_resource type="AudioStream" uid="uid://6esdu3un681" path="res://assets/boing.wav" id="3_7mekc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0w5h4"]
 size = Vector2(72, 72)
@@ -37,3 +38,6 @@ linear_accel_max = 0.1
 scale_amount_min = 0.0
 scale_amount_max = 2.0
 color_ramp = SubResource("Gradient_0w5h4")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1911192394]
+stream = ExtResource("3_7mekc")

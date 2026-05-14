@@ -11,7 +11,7 @@ func _process(_delta: float) -> void:
 	pass
 	
 func hit():
-	
+	$AudioStreamPlayer2D.play();
 	GameManager.add_points(1)
 	$CPUParticles2D.emitting = true
 	$Sprite2D.visible = false
