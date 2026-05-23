@@ -24,4 +24,4 @@ func _process(delta):
 	velocity.x += speed_difference * speed_adjust
 
 	position.x += velocity.x * delta
-	position.x = clamp(position.x, 100, 1820)  # Keep it inside screen 
+	position.x = clamp(position.x, 100, 1125)  # Keep it inside screen 

@@ -1,16 +1,13 @@
 extends CharacterBody2D
 
-var speed := 300.0
+var speed := 500.0
 var is_active := false
-var paddle_width := 199.0  # width of texture scaled down by 0.5 since the Sprite is scaled by 0.5
-var speed_up_zone_width := 30.0
-var speed_up_zone_check := 0.0
+var last_collider_is_brick := false
 
 func _ready() -> void:
 	speed = speed + (20 * GameManager.level)
 	$CPUParticles2D.visible = false;
 	velocity = Vector2(speed, speed)
-	speed_up_zone_check = (paddle_width - (2.0 * speed_up_zone_width)) / 2.0
 	
 func _process(_delta: float) -> void:
 	if !is_active:
@@ -25,19 +22,21 @@ func _physics_process(delta: float) -> void:
 	
 		if collision:
 			velocity = velocity.bounce(collision.get_normal())
+			
 			if collision.get_collider().has_method("hit"):
 				collision.get_collider().hit()
-			if collision.get_collider() == get_node("../paddleStatic"):
-				var paddle = get_node("../paddleStatic")
-				var collision_point = collision.get_position()
-				var paddle_position = paddle.position
-				if abs(collision_point.x - paddle_position.x) >= speed_up_zone_check:
-					print("speeding up")
-					var new_speed = clamp(velocity.length() + (0.5 * velocity.length()), 420.0, 1000.0)
+				if last_collider_is_brick:
+					var new_speed = clamp(velocity.length() + (0.1 * velocity.length()), 700.0, 1000.0)
 					velocity = velocity.normalized() * new_speed
-				else:
-					print("slowing down")
-					var new_speed = clamp(velocity.length() - (0.3 * velocity.length()), 420.0, 1000.0)
+					
+				last_collider_is_brick = true
+			else:
+				last_collider_is_brick = false
+	
+			if collision.get_collider() == get_node("../paddleStatic"):
+				var angle = velocity.normalized().dot(Vector2.LEFT) if (velocity.x < 0) else velocity.normalized().dot(Vector2.RIGHT)
+				if (abs(angle) > 0.8):
+					var new_speed = clamp(velocity.length() - (0.1 * velocity.length()), 700.0, 1000.0)
 					velocity = velocity.normalized() * new_speed
 		
 		# If we're not moving much in the y direction, spike it up in the air a bit

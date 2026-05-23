@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var brick_object = preload("res://scenes/brick.tscn")
 
-var columns = 25 # brick is 73 pixels wide and tall
+var columns = 16 # brick is 73 pixels wide and tall
 var rows = 5
 var margin = 50
 
@@ -13,29 +13,54 @@ func _ready() -> void:
 
 func setup_level():
 	
-	rows = 2 + GameManager.level
-	if rows > 7:
-		rows = 7
+	#rows = 2 + GameManager.level
+	#if rows > 7:
+		#rows = 7
 	
 	var colors = get_colors()
 	colors.shuffle()
-	for r in rows:
-		for c in columns:
-			var random_number = randi_range(0,3)
-			var color_number = randi_range(0,3)
-			if random_number % 2 == 0:
+	
+	var levels = get_levels()
+	
+	if GameManager.level > levels.size():
+		GameManager.level = 1
+		
+	var level = levels[GameManager.level-1]
+	var rowNum = 0
+	var colNum = 0
+	for row in level:
+		for col in row:
+			if col:
 				var new_brick = brick_object.instantiate()
 				add_child(new_brick)
-				new_brick.position = Vector2(margin + (75 * c), margin + (75 * r))
-				
+				new_brick.position = Vector2(margin + (75 * colNum), margin + (75 * rowNum))
+			
+				var color_number = randi_range(0,3)
 				var sprite = new_brick.get_node('Sprite2D')
 				sprite.modulate = colors[color_number]
+			colNum += 1
+		rowNum += 1
+		colNum = 0
+	
+	#for r in rows:
+		#for c in columns:
+			#var random_number = randi_range(0,3)
+			#var color_number = randi_range(0,3)
+			#if random_number % 2 == 0:
+				#var new_brick = brick_object.instantiate()
+				#add_child(new_brick)
+				#new_brick.position = Vector2(margin + (75 * c), margin + (75 * r))
+				#
+				#var sprite = new_brick.get_node('Sprite2D')
+				#sprite.modulate = colors[color_number]
 				
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	pass
+	if Input.is_action_just_pressed("skip_level"):
+		GameManager.level += 1
+		get_tree().reload_current_scene()
 	
 func get_colors():
 	return [
@@ -44,3 +69,24 @@ func get_colors():
 		Color(0.68,1,0.18,1),
 		Color(1,1,1,1)
 	]
+
+func get_levels():
+	return [level1,level2,level3]
+	
+var level1 = [
+	[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+	[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+	[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0]	
+]
+
+var level2 = [
+	[1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],
+	[0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1],
+	[0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1]
+]
+
+var level3 = [
+	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+]

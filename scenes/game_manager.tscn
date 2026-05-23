@@ -8,18 +8,18 @@ script = ExtResource("1_hwd4i")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1634702764]
 
 [node name="ScoreLabel" type="Label" parent="CanvasLayer" unique_id=1126156745]
-offset_left = 864.0
-offset_top = 1021.0
-offset_right = 1073.0
-offset_bottom = 1063.0
+offset_left = 495.0
+offset_top = 1237.0
+offset_right = 704.0
+offset_bottom = 1279.0
 theme_override_font_sizes/font_size = 30
 text = "0"
 horizontal_alignment = 1
 
 [node name="LevelLabel" type="Label" parent="CanvasLayer" unique_id=1011915447]
-offset_left = 1732.0
-offset_top = 1011.0
-offset_right = 1890.0
-offset_bottom = 1053.0
+offset_left = 1039.0
+offset_top = 1231.0
+offset_right = 1197.0
+offset_bottom = 1273.0
 theme_override_font_sizes/font_size = 30
 horizontal_alignment = 2
