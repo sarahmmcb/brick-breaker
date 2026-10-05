@@ -2,6 +2,9 @@ extends Node
 
 var score = 0
 var level = 1
+var extra_lives = 3
+@onready var message_label = %MessageLabel
+@onready var lives_label = %ExtraLives
 
 func add_points(points):
 	score += points

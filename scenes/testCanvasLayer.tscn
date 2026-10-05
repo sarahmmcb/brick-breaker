@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://f85as2u8h0eb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1hf2s"]
+font_size = 50
+
+[node name="Node" type="Node" unique_id=1080282738]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=624503768]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1325162899]
+offset_left = 836.0
+offset_top = 659.0
+offset_right = 1011.0
+offset_bottom = 761.0
+text = "CAN YOU SEE MEE"
+label_settings = SubResource("LabelSettings_1hf2s")

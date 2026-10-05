@@ -20,7 +20,7 @@ script = ExtResource("1_cxlvu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=147469480]
 z_index = 1
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.35, 0.35)
 texture = ExtResource("1_7s4qf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=646886570]

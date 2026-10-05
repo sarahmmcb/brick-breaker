@@ -1,6 +1,6 @@
 extends StaticBody2D
 
-const SPEED := 1000  # Move speed
+const SPEED := 1100  # Move speed
 var speed_factor := 7.0
 var velocity := Vector2(0,0) # StaticBody2D doesn't come with a velocity prop
 
@@ -8,7 +8,7 @@ func _ready():
 	var sprite: Sprite2D = get_node('Sprite2D')
 	sprite.self_modulate = Color(1,1,0.2,1)
 	
-func _process(delta):
+func _physics_process(delta):
 	var direction := 0
 	if Input.is_action_pressed("ui_left"):
 		direction = -1
@@ -24,4 +24,4 @@ func _process(delta):
 	velocity.x += speed_difference * speed_adjust
 
 	position.x += velocity.x * delta
-	position.x = clamp(position.x, 100, 1125)  # Keep it inside screen 
+	position.x = clamp(position.x, 100, 1800)  # Keep it inside screen 

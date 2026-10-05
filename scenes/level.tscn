@@ -7,16 +7,16 @@
 [ext_resource type="PackedScene" uid="uid://r0o7uhr01cqm" path="res://scenes/paddle_static.tscn" id="5_ppgk2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w7c3h"]
-size = Vector2(25, 1291)
+size = Vector2(25, 1445)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w8frs"]
-size = Vector2(21, 1304.5)
+size = Vector2(21, 1438.4063)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mx8sn"]
-size = Vector2(1236.0007, 20)
+size = Vector2(1893.0044, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ppgk2"]
-size = Vector2(1218.25, 20)
+size = Vector2(1900.0313, 19)
 
 [node name="Level" type="Node2D" unique_id=934921851]
 script = ExtResource("1_w8frs")
@@ -26,40 +26,40 @@ visible = false
 position = Vector2(982, 971)
 
 [node name="Ball" parent="." unique_id=47705054 instance=ExtResource("2_w7c3h")]
-position = Vector2(609, 1145)
+position = Vector2(966, 1223)
 
 [node name="Walls" type="StaticBody2D" parent="." unique_id=452302689]
 
 [node name="Left Wall" type="CollisionShape2D" parent="Walls" unique_id=1870407911]
-position = Vector2(-10.5, 651.5)
+position = Vector2(-15, 717.5)
 shape = SubResource("RectangleShape2D_w7c3h")
 
 [node name="Right Wall" type="CollisionShape2D" parent="Walls" unique_id=370463047]
-position = Vector2(1238.5, 646.75)
+position = Vector2(1914, 718.7969)
 shape = SubResource("RectangleShape2D_w8frs")
 
 [node name="Ceiling" type="CollisionShape2D" parent="Walls" unique_id=1739958239]
-position = Vector2(608.0004, 0.14368734)
+position = Vector2(949.50104, -12.126782)
 rotation = -0.00041230273
 shape = SubResource("RectangleShape2D_mx8sn")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=825774877]
 modulate = Color(1, 1, 1, 0.54901963)
 z_index = -2
-position = Vector2(614, 647.5)
-scale = Vector2(0.640625, 1.200926)
+position = Vector2(952.00006, 733.00006)
+scale = Vector2(0.98697907, 1.3384259)
 texture = ExtResource("4_mx8sn")
 
 [node name="DeathZone" type="Area2D" parent="." unique_id=1315340793]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone" unique_id=179476285]
-position = Vector2(611, 1312)
+position = Vector2(955.9844, 1460.5)
 shape = SubResource("RectangleShape2D_ppgk2")
 
 [node name="paddleStatic" parent="." unique_id=1909309345 instance=ExtResource("5_ppgk2")]
-position = Vector2(609, 1178)
+position = Vector2(966, 1269)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1737212955]
-position = Vector2(614, 654)
+position = Vector2(952, 722)
 
 [connection signal="body_entered" from="DeathZone" to="Ball" method="_on_death_zone_body_entered"]
