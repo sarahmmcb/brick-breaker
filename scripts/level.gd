@@ -5,20 +5,24 @@ var lives_label_text = "[img width=40 height=40]res://assets/ball.png[/img]    "
 
 var columns = 16 # brick is 73 pixels wide and tall
 var rows = 5
-var margin = 200 # Orig: 50
+var side_margin = 200
+var top_margin = 200
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	setup_level()
 
+func set_extra_lives():
+	GameManager.lives_label.text = "";
+	for i in range(GameManager.extra_lives):
+		GameManager.lives_label.text = GameManager.lives_label.text + lives_label_text
+
 func setup_level():
 	var colors = get_colors()
 	colors.shuffle()
 	
-	GameManager.lives_label.text = "";
-	for i in range(GameManager.extra_lives):
-		GameManager.lives_label.text = GameManager.lives_label.text + lives_label_text
-		
+	set_extra_lives()
+	
 	var levels = get_levels()
 	
 	if GameManager.level > levels.size():
@@ -32,7 +36,7 @@ func setup_level():
 			if col:
 				var new_brick = brick_object.instantiate()
 				add_child(new_brick)
-				new_brick.position = Vector2(margin + (75 * colNum), margin + (75 * rowNum))
+				new_brick.position = Vector2(side_margin + (75 * colNum), top_margin + (75 * rowNum))
 			
 				var color_number = randi_range(0,3)
 				var sprite = new_brick.get_node('Sprite2D')

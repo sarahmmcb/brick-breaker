@@ -6,7 +6,7 @@ var last_collider_is_brick := false
 
 func _ready() -> void:
 	speed = speed + (20 * GameManager.level)
-	$CPUParticles2D.visible = false;
+	$CPUParticles2D.emitting = false;
 	velocity = Vector2(speed, speed)
 	
 func _process(_delta: float) -> void:
@@ -14,7 +14,7 @@ func _process(_delta: float) -> void:
 		if Input.is_action_just_pressed("launch"):
 			GameManager.message_label.visible = false
 			is_active = true;
-			$CPUParticles2D.visible = true;
+			$CPUParticles2D.emitting = true;
 			
 	
 func _physics_process(delta: float) -> void:
@@ -53,13 +53,22 @@ func _physics_process(delta: float) -> void:
 func game_over():
 	GameManager.score = 0
 	GameManager.level = 1
+	GameManager.extra_lives = 3
 	GameManager.message_label.text = "Game Over!\nPress space to start again"
 	GameManager.message_label.visible = true
 	get_tree().reload_current_scene()
+
+func subtract_life():
+	GameManager.extra_lives -= 1
+	is_active = false
+	position.x = get_node("../paddleStatic").position.x
+	position.y = get_node("../paddleStatic").position.y - 53
+	$CPUParticles2D.emitting = false;
+	velocity = Vector2(speed, speed)
+	get_node("..").set_extra_lives()
 	
 func _on_death_zone_body_entered(_body: Node2D) -> void:
 	if (GameManager.extra_lives > 0):
-		GameManager.extra_lives -= 1
-		get_tree().reload_current_scene()
+		call_deferred("subtract_life")
 	else:
 		call_deferred("game_over")

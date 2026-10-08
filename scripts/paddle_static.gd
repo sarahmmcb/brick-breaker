@@ -6,7 +6,7 @@ var velocity := Vector2(0,0) # StaticBody2D doesn't come with a velocity prop
 
 func _ready():
 	var sprite: Sprite2D = get_node('Sprite2D')
-	sprite.self_modulate = Color(1,1,0.2,1)
+	#sprite.self_modulate = Color(1,1,0.2,1)
 	
 func _physics_process(delta):
 	var direction := 0
@@ -24,4 +24,4 @@ func _physics_process(delta):
 	velocity.x += speed_difference * speed_adjust
 
 	position.x += velocity.x * delta
-	position.x = clamp(position.x, 100, 1800)  # Keep it inside screen 
+	position.x = clamp(position.x, 138, 1762)  # Keep it inside screen 
