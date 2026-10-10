@@ -38,7 +38,7 @@ func hit():
 func end_level():
 	get_parent().get_node("Ball").is_active = false
 	await get_tree().create_timer(1).timeout
-	var level_beaten = true
+	level_beaten = true
 	GameManager.message_label.text = "You beat level " + str(GameManager.level) + "!"
 	GameManager.message_label.text += "\nPress Space to start the next level"
 	GameManager.message_label.visible = true

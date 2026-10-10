@@ -7,7 +7,7 @@ var last_collider_is_brick := false
 
 func _ready() -> void:
 	speed = speed + (20 * GameManager.level)
-	$CPUParticles2D.emitting = false;
+#	$CPUParticles2D.emitting = false;
 	velocity = Vector2(speed, speed)
 	
 func _process(_delta: float) -> void:
@@ -15,7 +15,7 @@ func _process(_delta: float) -> void:
 		if Input.is_action_just_pressed("launch"):
 			GameManager.message_label.visible = false
 			is_active = true
-			$CPUParticles2D.emitting = true
+			#$CPUParticles2D.emitting = true
 			
 	if is_game_over:
 		if Input.is_action_just_pressed("restart_after_game_over"):
@@ -67,7 +67,7 @@ func subtract_life():
 	is_active = false
 	position.x = get_node("../paddleStatic").position.x
 	position.y = get_node("../paddleStatic").position.y - 53
-	$CPUParticles2D.emitting = false;
+	#$CPUParticles2D.emitting = false;
 	velocity = Vector2(speed, speed)
 	get_node("..").set_extra_lives()
 	
