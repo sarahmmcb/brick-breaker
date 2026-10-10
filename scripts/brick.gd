@@ -11,10 +11,16 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("launch") && level_beaten:
 		level_beaten = false
-		
+
+func award_extra_life():
+	if (GameManager.score % 100 == 0 && GameManager.extra_lives < 3):
+		GameManager.extra_lives += 1
+		$"..".set_extra_lives()
+
 func hit():
 	#$AudioStreamPlayer2D.play();
 	GameManager.add_points(1)
+	award_extra_life()
 	$CPUParticles2D.emitting = true
 	$Sprite2D.visible = false
 	$CollisionShape2D.disabled = true

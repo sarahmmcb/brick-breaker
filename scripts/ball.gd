@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 var speed := 500.0
 var is_active := false
+var is_game_over := false
 var last_collider_is_brick := false
 
 func _ready() -> void:
@@ -13,9 +14,15 @@ func _process(_delta: float) -> void:
 	if !is_active:
 		if Input.is_action_just_pressed("launch"):
 			GameManager.message_label.visible = false
-			is_active = true;
-			$CPUParticles2D.emitting = true;
+			is_active = true
+			$CPUParticles2D.emitting = true
 			
+	if is_game_over:
+		if Input.is_action_just_pressed("restart_after_game_over"):
+			GameManager.score = 0
+			GameManager.extra_lives = 3
+			GameManager.message_label.text = "Press Space to start!"
+			get_tree().reload_current_scene()
 	
 func _physics_process(delta: float) -> void:
 	if is_active:
@@ -51,12 +58,9 @@ func _physics_process(delta: float) -> void:
 		position.x = get_node("../paddleStatic").position.x
 	
 func game_over():
-	GameManager.score = 0
-	GameManager.level = 1
-	GameManager.extra_lives = 3
-	GameManager.message_label.text = "Game Over!\nPress space to start again"
+	is_game_over = true
+	GameManager.message_label.text = "Game Over!\nPress Enter to restart from current level"
 	GameManager.message_label.visible = true
-	get_tree().reload_current_scene()
 
 func subtract_life():
 	GameManager.extra_lives -= 1
