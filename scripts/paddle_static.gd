@@ -3,13 +3,11 @@ extends StaticBody2D
 const SPEED := 1100  # Move speed
 var speed_factor := 7.0
 var velocity := Vector2(0,0) # StaticBody2D doesn't come with a velocity prop
+@onready var paddle_sprite: Sprite2D = get_node('Sprite2D')
 
-func _ready():
-	var sprite: Sprite2D = get_node('Sprite2D')
-	#sprite.self_modulate = Color(1,1,0.2,1)
-	
 func _physics_process(delta):
 	var direction := 0
+	
 	if Input.is_action_pressed("ui_left"):
 		direction = -1
 	elif Input.is_action_pressed("ui_right"):

@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://cxr3m1ph3qun4"]
 
-[ext_resource type="PackedScene" uid="uid://bx6se8i20qa2f" path="res://scenes/paddle.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://t58063w8xqwt" path="res://scripts/level.gd" id="1_w8frs"]
 [ext_resource type="PackedScene" uid="uid://b6lnxt3usn2fa" path="res://scenes/ball.tscn" id="2_w7c3h"]
 [ext_resource type="Texture2D" uid="uid://cqdslh2n3ut56" path="res://assets/background.jpg" id="4_mx8sn"]
@@ -20,10 +19,6 @@ size = Vector2(1900.0313, 19)
 
 [node name="Level" type="Node2D" unique_id=934921851]
 script = ExtResource("1_w8frs")
-
-[node name="paddle" parent="." unique_id=1238660706 instance=ExtResource("1_2q6dc")]
-visible = false
-position = Vector2(982, 971)
 
 [node name="Ball" parent="." unique_id=47705054 instance=ExtResource("2_w7c3h")]
 position = Vector2(962, 1313)

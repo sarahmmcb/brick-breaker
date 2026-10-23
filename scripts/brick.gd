@@ -21,6 +21,7 @@ func hit():
 	#$AudioStreamPlayer2D.play();
 	GameManager.add_points(1)
 	award_extra_life()
+	$ShineParticles.emitting = false
 	$CPUParticles2D.emitting = true
 	$Sprite2D.visible = false
 	$CollisionShape2D.disabled = true

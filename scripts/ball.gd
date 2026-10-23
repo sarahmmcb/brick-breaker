@@ -1,13 +1,14 @@
 extends CharacterBody2D
 
-var speed := 500.0
+var min_speed := 650.0
+var max_speed := 1000.0
+var speed := 0
 var is_active := false
 var is_game_over := false
 var last_collider_is_brick := false
 
 func _ready() -> void:
-	speed = speed + (20 * GameManager.level)
-#	$CPUParticles2D.emitting = false;
+	speed = min_speed + (20 * (GameManager.level - 1))
 	velocity = Vector2(speed, speed)
 	
 func _process(_delta: float) -> void:
@@ -15,7 +16,6 @@ func _process(_delta: float) -> void:
 		if Input.is_action_just_pressed("launch"):
 			GameManager.message_label.visible = false
 			is_active = true
-			#$CPUParticles2D.emitting = true
 			
 	if is_game_over:
 		if Input.is_action_just_pressed("restart_after_game_over"):
@@ -33,19 +33,6 @@ func _physics_process(delta: float) -> void:
 			
 			if collision.get_collider().has_method("hit"):
 				collision.get_collider().hit()
-				if last_collider_is_brick:
-					var new_speed = clamp(velocity.length() + (0.1 * velocity.length()), 700.0, 1000.0)
-					velocity = velocity.normalized() * new_speed
-					
-				last_collider_is_brick = true
-			else:
-				last_collider_is_brick = false
-	
-			if collision.get_collider() == get_node("../paddleStatic"):
-				var angle = velocity.normalized().dot(Vector2.LEFT) if (velocity.x < 0) else velocity.normalized().dot(Vector2.RIGHT)
-				if (abs(angle) > 0.8):
-					var new_speed = clamp(velocity.length() - (0.1 * velocity.length()), 700.0, 1000.0)
-					velocity = velocity.normalized() * new_speed
 		
 		# If we're not moving much in the y direction, spike it up in the air a bit
 		if (velocity.y > 0 and velocity.y < 100):
@@ -67,7 +54,6 @@ func subtract_life():
 	is_active = false
 	position.x = get_node("../paddleStatic").position.x
 	position.y = get_node("../paddleStatic").position.y - 53
-	#$CPUParticles2D.emitting = false;
 	velocity = Vector2(speed, speed)
 	get_node("..").set_extra_lives()
 	
