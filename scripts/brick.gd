@@ -1,26 +1,36 @@
 extends RigidBody2D
 
-var level_beaten = false
+signal level_beaten
+
+enum Brick_Type {
+	BASIC,
+	WIDER_PADDLE,
+	FREE_RESTART,
+	FREEZE
+}
+
+var is_level_beaten := false
+var brick_type := Brick_Type.BASIC
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("launch") && level_beaten:
-		level_beaten = false
+		is_level_beaten = false
 
 func award_extra_life():
 	if (GameManager.score % 100 == 0 && GameManager.extra_lives < 3):
-		GameManager.extra_lives += 1
-		$"..".set_extra_lives()
+		GameManager.add_life()
+		GameManager.set_lives_label()
 
 func hit():
 	#$AudioStreamPlayer2D.play();
 	GameManager.add_points(1)
 	award_extra_life()
+	$ShineParticles.visible = false
 	$ShineParticles.emitting = false
 	$CPUParticles2D.emitting = true
 	$Sprite2D.visible = false
@@ -39,10 +49,17 @@ func hit():
 func end_level():
 	get_parent().get_node("Ball").is_active = false
 	await get_tree().create_timer(1).timeout
-	level_beaten = true
-	GameManager.message_label.text = "You beat level " + str(GameManager.level) + "!"
-	GameManager.message_label.text += "\nPress Space to start the next level"
-	GameManager.message_label.visible = true
-	GameManager.level += 1
-	get_tree().reload_current_scene()		
+	is_level_beaten = true
+	level_beaten.emit()
+	get_tree().reload_current_scene()
+
+func set_brick_type(brick_type: int):
+	match brick_type	:
+		2: brick_type = Brick_Type.WIDER_PADDLE
+		3: brick_type = Brick_Type.FREE_RESTART
+		4: brick_type = Brick_Type.FREEZE
+		_: brick_type = Brick_Type.BASIC
+	
+		
+			
 	

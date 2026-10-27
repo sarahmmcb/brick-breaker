@@ -1,7 +1,8 @@
 extends Node2D
 
-var lives_label_ball = "[img width=40 height=40]res://assets/ball.png[/img]    "
 @onready var brick_object = preload("res://scenes/brick.tscn")
+
+signal level_ready
 
 var brick_height := 73
 var brick_width := 73
@@ -12,24 +13,21 @@ var top_margin = 200
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	GameManager.connect_signals()
 	setup_level()
-
-func set_extra_lives():
-	for i in range(GameManager.extra_lives):
-		GameManager.lives_label.text = lives_label_ball + "x " + str(GameManager.extra_lives)
 
 func setup_level():
 	var colors = get_colors()
 	colors.shuffle()
 	var powerup_colors = get_powerup_colors()
 	
-	set_extra_lives()
+	GameManager.set_lives_label()
 	
 	var levels = get_levels()
 	var powerups = get_powerups()
 	
 	if GameManager.level > levels.size():
-		GameManager.level = 1
+		GameManager.level = 1 # TODO: end the game before this happens
 		
 	var level = levels[GameManager.level-1]
 	var level_powerups = powerups[GameManager.level-1]
@@ -49,16 +47,18 @@ func setup_level():
 				if level[rowNum][colNum] > 1:
 					new_brick.get_node("ShineParticles").emitting = true
 					sprite.modulate = powerup_colors[level[rowNum][colNum] - 2]
+					new_brick.set_brick_type(level[rowNum][colNum])
 				else:
 					sprite.modulate = colors[rowNum % colors.size()]
 			colNum += 1
 		rowNum += 1
 		colNum = 0
+	level_ready.emit()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("skip_level"): # Q
-		GameManager.level += 1
+		GameManager.add_level()
 		get_tree().reload_current_scene()
 	if Input.is_action_just_pressed("beat_level"): # R
 		get_tree().get_first_node_in_group("Brick").end_level()
@@ -91,8 +91,8 @@ func get_colors():
 
 func get_powerup_colors():
 	return [
-		Color(1,0,0,1), # Paddle Size
-		Color(0,1,0,1),  # Velocity Adjust
+		Color(1,0,0,1), # Bomb
+		Color(0,1,0,1),  # Wider paddle
 		Color(0,0,1,1)  # Freeze (paddle still moves)
 	]
 
@@ -128,9 +128,9 @@ var level4 = [
 
 """
 Powerups are:
-	2. Paddle size
-	3. Free Restart
-	4. Freeze Ball
+	2. Bomb
+	3. Wider Paddle
+	4. Freeze
 """
 func get_powerups():
 	return [

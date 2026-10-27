@@ -21,6 +21,7 @@ size = Vector2(1900.0313, 19)
 script = ExtResource("1_w8frs")
 
 [node name="Ball" parent="." unique_id=47705054 instance=ExtResource("2_w7c3h")]
+unique_name_in_owner = true
 position = Vector2(962, 1313)
 
 [node name="Walls" type="StaticBody2D" parent="." unique_id=452302689]

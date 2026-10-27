@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+signal died
+signal game_over
+
 var min_speed := 650.0
 var max_speed := 1000.0
 var speed := 0
@@ -19,9 +22,7 @@ func _process(_delta: float) -> void:
 			
 	if is_game_over:
 		if Input.is_action_just_pressed("restart_after_game_over"):
-			GameManager.score = 0
-			GameManager.extra_lives = 3
-			GameManager.message_label.text = "Press Space to start!"
+			GameManager.reset_game()
 			get_tree().reload_current_scene()
 	
 func _physics_process(delta: float) -> void:
@@ -44,21 +45,19 @@ func _physics_process(delta: float) -> void:
 	else:
 		position.x = get_node("../paddleStatic").position.x
 	
-func game_over():
+func emit_game_over():
 	is_game_over = true
-	GameManager.message_label.text = "Game Over!\nPress Enter to restart from current level"
-	GameManager.message_label.visible = true
+	game_over.emit()
 
-func subtract_life():
-	GameManager.extra_lives -= 1
+func emit_died():
 	is_active = false
 	position.x = get_node("../paddleStatic").position.x
 	position.y = get_node("../paddleStatic").position.y - 53
 	velocity = Vector2(speed, speed)
-	get_node("..").set_extra_lives()
+	died.emit()
 	
 func _on_death_zone_body_entered(_body: Node2D) -> void:
 	if (GameManager.extra_lives > 0):
-		call_deferred("subtract_life")
+		call_deferred("emit_died")
 	else:
-		call_deferred("game_over")
+		call_deferred("emit_game_over")

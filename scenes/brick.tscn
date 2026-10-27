@@ -13,7 +13,7 @@ offsets = PackedFloat32Array(0.8419689, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="Curve" id="Curve_ci8dj"]
-_data = [Vector2(0, 0.50988), 0.0, 0.9421243, 0, 1, Vector2(0.5152355, 0.9952959), 0.0, 0.0, 0, 0, Vector2(1, 0.5020002), -1.0175986, 0.0, 1, 0]
+_data = [Vector2(0, 0.50988), 0.0, 1.2632242, 0, 1, Vector2(0.5152355, 0.9952959), 0.0, 0.0, 0, 0, Vector2(1, 0.5020002), -1.0175986, 0.0, 1, 0]
 point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_x7yom"]
@@ -36,7 +36,6 @@ scale = Vector2(0.4, 0.4)
 texture = ExtResource("1_5l4w1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1362499401]
-visible = false
 shape = SubResource("RectangleShape2D_0w5h4")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=335148085]
