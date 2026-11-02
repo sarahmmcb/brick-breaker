@@ -4,6 +4,7 @@ var score = 0
 var level = 1
 var extra_lives = 3
 var lives_label_ball = "[img width=40 height=40]res://assets/ball.png[/img]    "
+var paddle_powerup_time_left = 0.0
 @onready var message_label = %MessageLabel
 @onready var lives_label = %ExtraLives
 

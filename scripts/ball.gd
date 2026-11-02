@@ -10,6 +10,8 @@ var is_active := false
 var is_game_over := false
 var last_collider_is_brick := false
 
+signal level_started
+
 func _ready() -> void:
 	speed = min_speed + (20 * (GameManager.level - 1))
 	velocity = Vector2(speed, speed)
@@ -19,6 +21,7 @@ func _process(_delta: float) -> void:
 		if Input.is_action_just_pressed("launch"):
 			GameManager.message_label.visible = false
 			is_active = true
+			level_started.emit()
 			
 	if is_game_over:
 		if Input.is_action_just_pressed("restart_after_game_over"):

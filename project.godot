@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 [autoload]
 
 GameManager="*uid://b80lrklum61h6"
+Enums="*uid://btxll2g17fqb1"
 
 [display]
 
@@ -27,6 +28,9 @@ window/stretch/mode="canvas_items"
 [global_group]
 
 Brick=""
+Paddle_Powerup=""
+Bomb_Powerup=""
+Freeze_Powerup=""
 
 [input]
 

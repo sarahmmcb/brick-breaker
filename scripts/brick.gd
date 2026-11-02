@@ -1,16 +1,9 @@
 extends RigidBody2D
 
 signal level_beaten
-
-enum Brick_Type {
-	BASIC,
-	WIDER_PADDLE,
-	FREE_RESTART,
-	FREEZE
-}
+signal powerup_hit
 
 var is_level_beaten := false
-var brick_type := Brick_Type.BASIC
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,7 +28,12 @@ func hit():
 	$CPUParticles2D.emitting = true
 	$Sprite2D.visible = false
 	$CollisionShape2D.disabled = true
+	
+	if is_power_up():
+		handle_power_up()
+	
 	var bricks_left = get_tree().get_nodes_in_group("Brick")
+	
 	if bricks_left.size() == 1:
 		end_level()
 	else:
@@ -45,6 +43,15 @@ func hit():
 		# If we removed the block right away, the particles wouldn't show
 		await get_tree().create_timer(1).timeout
 		queue_free()
+
+func is_power_up():
+	return get_node(".").is_in_group("Paddle_Powerup") \
+		or get_node(".").is_in_group("Bomb_Powerup") \
+		or get_node(".").is_in_group("Freeze_Powerup")
+
+func handle_power_up():
+	if get_node(".").is_in_group("Paddle_Powerup"):
+		powerup_hit.emit(Enums.Brick_Type.WIDER_PADDLE, $"../paddleStatic".POWER_UP_S)
 		
 func end_level():
 	get_parent().get_node("Ball").is_active = false
@@ -52,14 +59,10 @@ func end_level():
 	is_level_beaten = true
 	level_beaten.emit()
 	get_tree().reload_current_scene()
-
-func set_brick_type(brick_type: int):
-	match brick_type	:
-		2: brick_type = Brick_Type.WIDER_PADDLE
-		3: brick_type = Brick_Type.FREE_RESTART
-		4: brick_type = Brick_Type.FREEZE
-		_: brick_type = Brick_Type.BASIC
 	
+func set_brick_type(type: int):
+	match type:
+		2: get_node(".").add_to_group("Bomb_Powerup")
+		3: get_node(".").add_to_group("Paddle_Powerup")
+		4: get_node(".").add_to_group("Freeze_Powerup")
 		
-			
-	
