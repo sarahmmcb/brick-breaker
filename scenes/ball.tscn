@@ -16,3 +16,6 @@ texture = ExtResource("1_7s4qf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=646886570]
 shape = SubResource("CircleShape2D_cxlvu")
+
+[node name="FreezeTimer" type="Timer" parent="." unique_id=593891133]
+unique_name_in_owner = true

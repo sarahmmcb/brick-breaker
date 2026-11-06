@@ -1,9 +1,12 @@
 extends RigidBody2D
 
 signal level_beaten
-signal powerup_hit
+signal paddle_powerup_hit
+signal freeze_powerup_hit
 
 var is_level_beaten := false
+var has_been_hit := false
+const blast_radius := 75.0 * 3.0 # (brick_width plus a little extra) * multiplier
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,6 +23,7 @@ func award_extra_life():
 		GameManager.set_lives_label()
 
 func hit():
+	has_been_hit = true
 	#$AudioStreamPlayer2D.play();
 	GameManager.add_points(1)
 	award_extra_life()
@@ -34,7 +38,7 @@ func hit():
 	
 	var bricks_left = get_tree().get_nodes_in_group("Brick")
 	
-	if bricks_left.size() == 1:
+	if bricks_left.size() <= 1:
 		end_level()
 	else:
 		# wait one second before deleting block from existence
@@ -50,8 +54,21 @@ func is_power_up():
 		or get_node(".").is_in_group("Freeze_Powerup")
 
 func handle_power_up():
-	if get_node(".").is_in_group("Paddle_Powerup"):
-		powerup_hit.emit(Enums.Brick_Type.WIDER_PADDLE, $"../paddleStatic".POWER_UP_S)
+	var powerup_node = get_node(".")
+	if powerup_node.is_in_group("Paddle_Powerup"):
+		paddle_powerup_hit.emit($"../paddleStatic".POWER_UP_S)
+	if powerup_node.is_in_group("Bomb_Powerup"):
+		_handle_bomb_powerup(powerup_node)
+	if powerup_node.is_in_group("Freeze_Powerup"):
+		freeze_powerup_hit.emit()
+		
+func _handle_bomb_powerup(powerup_node: RigidBody2D):
+	var all_bricks = get_tree().get_nodes_in_group("Brick")
+	for brick in all_bricks:
+		if brick != null && brick != powerup_node:
+			var distance = brick.position.distance_to(powerup_node.position)
+			if brick != null && distance <= blast_radius && !brick.has_been_hit:
+				brick.hit() 
 		
 func end_level():
 	get_parent().get_node("Ball").is_active = false

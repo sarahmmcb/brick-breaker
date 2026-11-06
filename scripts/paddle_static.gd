@@ -14,7 +14,7 @@ func _ready():
 	var game_level = get_node("..")
 	game_level.level_ready.connect(_on_level_ready)
 	if (GameManager.paddle_powerup_time_left > 0.0):
-		_handle_wider_paddle(Enums.Brick_Type.WIDER_PADDLE, GameManager.paddle_powerup_time_left)
+		_handle_wider_paddle(GameManager.paddle_powerup_time_left)
 		%PowerupTimer.set_paused(true)
 		%LabelUpdateTimer.set_paused(true)
 		GameManager.paddle_powerup_time_left = 0.0
@@ -43,23 +43,22 @@ func _physics_process(delta):
 	position.x += velocity.x * delta
 	position.x = clamp(position.x, width * 0.5, VIEWPORT_WIDTH - (width * 0.5) )  # Keep it inside screen 
 	
-func _handle_wider_paddle(type: Enums.Brick_Type, time: float):
-	if (type == Enums.Brick_Type.WIDER_PADDLE):
-		if (%PowerupTimer.time_left > 0.0):
-			var new_time = %PowerupTimer.time_left + POWER_UP_S
-			%PowerupTimer.stop()
-			%LabelUpdateTimer.stop()
-			%PowerupTimer.start(new_time)
-			%LabelUpdateTimer.start(0.1)
-			%PowerupLabel.text = _get_powerup_time_left()
-		else:
-			paddle_sprite.scale.x *= 2.0
-			$CollisionShape2D.scale.y *= 2.0
-			width = width * 2
-			%PowerupTimer.start(time)
-			%LabelUpdateTimer.start(0.1)
-			%PowerupLabel.text = _get_powerup_time_left()
-			%PowerupLabel.visible = true
+func _handle_wider_paddle(time: float):
+	if (%PowerupTimer.time_left > 0.0):
+		var new_time = %PowerupTimer.time_left + POWER_UP_S
+		%PowerupTimer.stop()
+		%LabelUpdateTimer.stop()
+		%PowerupTimer.start(new_time)
+		%LabelUpdateTimer.start(0.1)
+		%PowerupLabel.text = _get_powerup_time_left()
+	else:
+		paddle_sprite.scale.x *= 2.0
+		$CollisionShape2D.scale.y *= 2.0
+		width = width * 2
+		%PowerupTimer.start(time)
+		%LabelUpdateTimer.start(0.1)
+		%PowerupLabel.text = _get_powerup_time_left()
+		%PowerupLabel.visible = true
 				
 func reset_paddle_size():
 	pass
@@ -70,7 +69,7 @@ func _get_powerup_time_left():
 func _on_level_ready():
 	var paddle_powerups = get_tree().get_nodes_in_group("Paddle_Powerup")
 	for member in paddle_powerups:
-		member.powerup_hit.connect(_handle_wider_paddle)
+		member.paddle_powerup_hit.connect(_handle_wider_paddle)
 	var bricks = get_tree().get_nodes_in_group("Brick")
 	for member in bricks:
 		member.level_beaten.connect(_on_level_beaten)
