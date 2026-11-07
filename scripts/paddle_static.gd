@@ -2,7 +2,7 @@ extends StaticBody2D
 
 const VIEWPORT_WIDTH := 1900 # TODO: make this programmatic
 const POWER_UP_S := 60.0
-var SPEED := 1100  # Move speed
+var speed := 1300  # Move speed
 var speed_factor := 7.0
 var velocity := Vector2(0,0) # StaticBody2D doesn't come with a velocity prop
 var width := 551 # sprite is 551 pixels wide
@@ -14,7 +14,7 @@ func _ready():
 	var game_level = get_node("..")
 	game_level.level_ready.connect(_on_level_ready)
 	if (GameManager.level > 5):
-		SPEED *= 1.25
+		speed *= 1.25
 	if (GameManager.paddle_powerup_time_left > 0.0):
 		_handle_wider_paddle(GameManager.paddle_powerup_time_left)
 		%PowerupTimer.set_paused(true)
@@ -34,7 +34,7 @@ func _physics_process(delta):
 	elif Input.is_action_pressed("ui_right"):
 		direction = 1
 	
-	var desired_speed := direction * SPEED
+	var desired_speed := direction * speed
 	var speed_difference := desired_speed - velocity.x
 	var speed_adjust = speed_factor * delta
 	if speed_adjust > 1.0:

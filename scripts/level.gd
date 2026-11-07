@@ -54,6 +54,9 @@ func setup_level():
 			colNum += 1
 		rowNum += 1
 		colNum = 0
+		
+	get_tree().paused = GameManager.level == 1
+	%PauseScreen.visible = GameManager.level == 1
 	level_ready.emit()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -15,7 +15,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("launch") && level_beaten:
-		is_level_beaten = false
+		is_level_beaten = false	
 
 func award_extra_life():
 	if (GameManager.score % 100 == 0 && GameManager.extra_lives < 3):

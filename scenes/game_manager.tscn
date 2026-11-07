@@ -63,7 +63,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 42
-text = "Press Space to start!"
+text = "Press ENTER to start!"
 horizontal_alignment = 1
 
 [node name="FreezePowerup" type="RichTextLabel" parent="CanvasLayer" unique_id=1593421522]

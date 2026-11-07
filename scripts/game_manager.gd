@@ -49,7 +49,7 @@ func set_freeze_label():
 func reset_game():
 	score = 0
 	extra_lives = 3
-	message_label.text = "Press Space to start!"
+	message_label.text = "Press Enter to start!"
 	
 func _on_game_over():
 	message_label.text = "Game Over!\nPress Enter to restart from current level"

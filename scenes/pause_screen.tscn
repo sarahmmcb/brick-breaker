@@ -1,0 +1,185 @@
+[gd_scene format=3 uid="uid://cwms0wqq4gqti"]
+
+[ext_resource type="Script" uid="uid://bhnqs0rvpi46t" path="res://scenes/pause_screen.gd" id="1_27awe"]
+[ext_resource type="Texture2D" uid="uid://dqsj63y3sj8hk" path="res://assets/pause_screen.png" id="1_hr2n2"]
+[ext_resource type="Theme" uid="uid://b2dbl8tyk5ehd" path="res://pause_label_theme.tres" id="2_27awe"]
+[ext_resource type="Texture2D" uid="uid://fbp6dt6lefu4" path="res://assets/brick.png" id="3_duq8p"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ppgk2"]
+content_margin_left = 560.0
+content_margin_top = 29.0
+bg_color = Color(0.6, 0.6, 0.6, 0.019607844)
+
+[node name="PauseScreen" type="Control" unique_id=1893922536]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -741.5
+offset_top = -619.5
+offset_right = 741.5
+offset_bottom = 619.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_27awe")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=387136570]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_hr2n2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect" unique_id=1609746110]
+layout_mode = 0
+offset_right = 1369.0
+offset_bottom = 1117.0
+
+[node name="Label" type="Label" parent="TextureRect/VBoxContainer" unique_id=1316828211]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxFlat_ppgk2")
+text = "Brick Breaker"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureRect/VBoxContainer" unique_id=1425340404]
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 11
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/VBoxContainer/HBoxContainer" unique_id=1318437571]
+layout_mode = 2
+
+[node name="LeftColumnLabel" type="Label" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=355566100]
+layout_mode = 2
+theme = ExtResource("2_27awe")
+text = "This game plays like traditional brick breaker, 
+but with a few differences."
+
+[node name="LeftColumnLabel2" type="Label" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=2063468681]
+layout_mode = 2
+theme = ExtResource("2_27awe")
+theme_override_font_sizes/font_size = 30
+text = "There are 10 levels. The ball gets a little faster
+with each level. At Level 6, the paddle speeds
+up as well."
+
+[node name="LeftColumnLabel3" type="Label" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=2061564587]
+layout_mode = 2
+theme = ExtResource("2_27awe")
+text = "Starting in Level 2, there are powerups.
+The amount and type of powerups vary 
+per level and are placed randomly."
+
+[node name="LeftColumnLabel4" type="Label" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1751482427]
+layout_mode = 2
+theme = ExtResource("2_27awe")
+text = "Controls:
+RIGHT arrow key: Move paddle right
+LEFT arrow key: Move paddle left
+
+Level 7 and up:
+UP arrow key: Tilt paddle left
+DOWN arrow key: Tilt paddle right"
+
+[node name="LeftColumnLabel5" type="Label" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=227362406]
+layout_mode = 2
+theme = ExtResource("2_27awe")
+text = "At the start of a level, use the RIGHT and 
+LEFT arrow keys to choose a starting 
+direction, then press ENTER to launch 
+the ball."
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="TextureRect/VBoxContainer/HBoxContainer" unique_id=87353776]
+layout_mode = 2
+
+[node name="RightColumnLabel" type="Label" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=453166945]
+layout_mode = 2
+theme = ExtResource("2_27awe")
+text = "There are three kinds of powerups in the
+game:"
+
+[node name="BombPowerup" type="HBoxContainer" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=1104459819]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer2/BombPowerup" unique_id=2020149967]
+layout_mode = 2
+theme_override_constants/margin_left = 47
+theme_override_constants/margin_top = 29
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer2/BombPowerup/MarginContainer" unique_id=663607646]
+modulate = Color(1, 0, 0, 1)
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("3_duq8p")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer2/BombPowerup" unique_id=1659228439]
+layout_mode = 2
+theme = ExtResource("2_27awe")
+text = "Bomb Powerup: destroys all 
+bricks within the blast radius"
+
+[node name="BombPowerup2" type="HBoxContainer" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=1912848960]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer2/BombPowerup2" unique_id=2042576003]
+layout_mode = 2
+theme_override_constants/margin_left = 47
+theme_override_constants/margin_top = 29
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer2/BombPowerup2/MarginContainer" unique_id=507774934]
+modulate = Color(0.735357, 0, 1, 1)
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("3_duq8p")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer2/BombPowerup2" unique_id=1943870674]
+layout_mode = 2
+theme = ExtResource("2_27awe")
+text = "Paddle Powerup: widen paddle
+for a set amount of time"
+
+[node name="BombPowerup3" type="HBoxContainer" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=388306749]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer2/BombPowerup3" unique_id=1632949546]
+layout_mode = 2
+theme_override_constants/margin_left = 47
+theme_override_constants/margin_top = 29
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer2/BombPowerup3/MarginContainer" unique_id=1435161810]
+modulate = Color(0, 0, 1, 1)
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("3_duq8p")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer2/BombPowerup3" unique_id=706399274]
+layout_mode = 2
+theme = ExtResource("2_27awe")
+text = "Freeze Powerup: freeze the ball
+for 5 seconds, paddle still moves
+Press SPACE to activate"
+
+[node name="RightColumnLabel2" type="Label" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=818704786]
+layout_mode = 2
+theme = ExtResource("2_27awe")
+text = "You start with 3 extra lives. Every 100 points
+earns an extra life. Each brick is 1 point."
+
+[node name="RightColumnLabel3" type="Label" parent="TextureRect/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=1570895539]
+layout_mode = 2
+theme = ExtResource("2_27awe")
+text = "Press ESC to toggle pause
+
+Press TAB to pause and show this screen
+
+Press TAB to close this screen"
