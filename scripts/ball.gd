@@ -26,7 +26,7 @@ func _process(_delta: float) -> void:
 			is_active = true
 			level_started.emit()
 			
-	if Input.is_action_just_pressed("freeze"):
+	if Input.is_action_just_pressed("freeze") && is_active:
 		if GameManager.freeze_powerups > 0:
 			%FreezeTimer.start(freeze_time)
 			is_frozen = true
