@@ -21,6 +21,7 @@ func connect_signals():
 	ball.freeze_activated.connect(_on_use_freeze_powerup)
 	var game_level = get_node(^"/root/Level")
 	game_level.level_ready.connect(_on_level_ready)
+	game_level.level_beaten.connect(_on_level_beaten)
 
 func add_points(points):
 	score += points
@@ -60,9 +61,6 @@ func _on_died():
 	set_lives_label()
 
 func _on_level_ready():
-	var bricks = get_tree().get_nodes_in_group("Brick")
-	for member in bricks:
-		member.level_beaten.connect(_on_level_beaten)
 	var freeze_powerups = get_tree().get_nodes_in_group("Freeze_Powerup")
 	for member in freeze_powerups:
 		member.freeze_powerup_hit.connect(_on_freeze_powerup_hit)

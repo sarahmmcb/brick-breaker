@@ -70,6 +70,8 @@ func emit_died():
 	died.emit()
 	
 func _on_death_zone_body_entered(_body: Node2D) -> void:
+	if  get_tree().get_nodes_in_group("Brick").size() == 0:
+		return
 	if (GameManager.extra_lives > 0):
 		call_deferred("emit_died")
 	else:

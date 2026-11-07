@@ -3,6 +3,7 @@ extends Node2D
 @onready var brick_object = preload("res://scenes/brick.tscn")
 
 signal level_ready
+signal level_beaten
 
 var brick_height := 73
 var brick_width := 73
@@ -10,6 +11,7 @@ var columns = 16
 var rows = 5
 var side_margin = 127
 var top_margin = 200
+var is_level_beaten := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -64,8 +66,22 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("skip_level"): # Q
 		GameManager.add_level()
 		get_tree().reload_current_scene()
+		return
 	if Input.is_action_just_pressed("beat_level"): # R
 		get_tree().get_first_node_in_group("Brick").end_level()
+	if Input.is_action_just_pressed("launch") && is_level_beaten:
+		is_level_beaten = false
+	
+	var bricks_left = get_tree().get_nodes_in_group("Brick")
+	if bricks_left.size() == 0:
+		end_level()
+
+func end_level():
+	get_node("Ball").is_active = false
+	#await get_tree().create_timer(1).timeout
+	is_level_beaten = true
+	level_beaten.emit()
+	get_tree().reload_current_scene()
 	
 """
 `level` is 2D array describing the level
@@ -101,17 +117,17 @@ func get_powerup_colors():
 	]
 
 func get_levels():
-	return [level1,level2,level3,level4,level5,level6]
+	return [level1,level2,level3,level4,level5,level6,level7,level8]
 	
-#var level1 = [
-	#[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
-	#[0,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0],
-	#[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0]	
-#]
-
 var level1 = [
-	[0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+	[0,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0],
+	[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0]	
 ]
+
+#var level1 = [
+	#[0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
+#]
 
 var level2 = [
 	[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
@@ -154,6 +170,26 @@ var level6 = [
 	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ]
 
+var level7 = [
+	[0,1,1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,0,0,1,1],
+	[0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,1],
+	[0,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,0,0,1],
+	[0,1,1,1,0,0,1,1,0,0,1,1,1,1,0,0,1,1,0,0,1,1,1],
+	[0,1,1,1,0,0,1,1,0,0,1,0,0,1,0,0,1,1,0,0,1,1,1],
+	[0,0,0,1,1,1,0,0,1,1,1,0,0,1,1,1,0,0,1,1,0,0,1],
+	[0,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1],
+]
+
+var level8 = [
+	[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+	[0,1,0,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,0,0,1],
+	[0,1,0,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,0,0,1],
+	[0,1,1,1,0,0,1,1,0,0,1,1,1,1,0,0,1,1,0,0,1,1,1],
+	[0,1,1,1,0,0,1,1,0,0,1,1,1,1,0,0,1,1,0,0,1,1,1],
+	[0,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1],
+	[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+]
+
 """
 Powerups are:
 	2. Bomb
@@ -168,6 +204,8 @@ func get_powerups():
 		level4_powerups,
 		level5_powerups,
 		level6_powerups,
+		level7_powerups,
+		level8_powerups,
 	]
 	
 var level1_powerups = []
@@ -176,3 +214,5 @@ var level3_powerups = [2,3,4]
 var level4_powerups = [2,2,4]
 var level5_powerups = [2,2,3,4,4]
 var level6_powerups = [2,2,3,3,4,4]
+var level7_powerups = [2,2,2,3,3,4,]
+var level8_powerups = [2,2,2,2,3,3,4,]
