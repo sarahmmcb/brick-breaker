@@ -49,10 +49,10 @@ func set_freeze_label():
 func reset_game():
 	score = 0
 	extra_lives = 3
-	message_label.text = "Press Enter to start!"
+	message_label.text = "Press ENTER to start!"
 	
 func _on_game_over():
-	message_label.text = "Game Over!\nPress Enter to restart from current level"
+	message_label.text = "Game Over!\nPress ENTER to restart from current level"
 	message_label.visible = true
 
 func _on_died():
@@ -69,7 +69,7 @@ func _on_level_ready():
 	
 func _on_level_beaten():
 	message_label.text = "You beat level " + str(GameManager.level) + "!"
-	message_label.text += "\nPress Space to start the next level"
+	message_label.text += "\nPress ENTER to start the next level"
 	message_label.visible = true
 	level += 1
 

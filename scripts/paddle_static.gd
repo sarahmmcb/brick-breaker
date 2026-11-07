@@ -2,8 +2,10 @@ extends StaticBody2D
 
 const VIEWPORT_WIDTH := 1900 # TODO: make this programmatic
 const POWER_UP_S := 60.0
+const MAX_TILT := 0.262 # radians
 var speed := 1300  # Move speed
 var speed_factor := 7.0
+var tilt_amount := 0.05 # radians
 var velocity := Vector2(0,0) # StaticBody2D doesn't come with a velocity prop
 var width := 551 # sprite is 551 pixels wide
 
@@ -25,25 +27,35 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("launch"):
 		%PowerupTimer.set_paused(false)
 		%LabelUpdateTimer.set_paused(false)
+	if Input.is_action_just_pressed("level_paddle"):
+		rotation = 0.0
 
 func _physics_process(delta):
 	var direction := 0
+	var tilt_dir := 0
 	
 	if Input.is_action_pressed("ui_left"):
 		direction = -1
 	elif Input.is_action_pressed("ui_right"):
 		direction = 1
 	
+	if Input.is_action_pressed("ui_up"):
+		tilt_dir = 1
+	elif Input.is_action_pressed("ui_down"):
+		tilt_dir = -1
+	
 	var desired_speed := direction * speed
 	var speed_difference := desired_speed - velocity.x
 	var speed_adjust = speed_factor * delta
 	if speed_adjust > 1.0:
 		speed_adjust = 1.0
-		
 	velocity.x += speed_difference * speed_adjust
-
 	position.x += velocity.x * delta
 	position.x = clamp(position.x, width * 0.5, VIEWPORT_WIDTH - (width * 0.5) )  # Keep it inside screen 
+	
+	rotation += tilt_dir * tilt_amount
+	rotation = clamp(rotation, -MAX_TILT, MAX_TILT)
+	
 	
 func _handle_wider_paddle(time: float):
 	if (%PowerupTimer.time_left > 0.0):
