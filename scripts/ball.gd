@@ -5,8 +5,8 @@ signal game_over
 signal level_started
 signal freeze_activated
 
-var min_speed := 650.0
-var max_speed := 1000.0
+var min_speed := 920.0
+var max_speed := 1414.0
 var speed := 0
 var is_active := false
 var is_game_over := false
@@ -16,8 +16,14 @@ var freeze_time := 5.0
 
 func _ready() -> void:
 	speed = min_speed + (15 * (GameManager.level - 1))
-	velocity = Vector2(speed, speed)
+	velocity = speed * _get_random_velocity()
 	%FreezeTimer.timeout.connect(_on_freeze_timeout)
+	
+func _get_random_velocity():
+	var rand_vel_x = randf_range(0.5, sqrt(3)/2)
+	var rand_vel_y = randf_range(0.5, sqrt(3)/2)
+	rand_vel_x = rand_vel_x if randi_range(1,2) % 2 == 0 else -rand_vel_x
+	return Vector2(rand_vel_x, rand_vel_y).normalized()
 	
 func _process(_delta: float) -> void:
 	if !is_active:
@@ -34,7 +40,7 @@ func _process(_delta: float) -> void:
 			
 	if is_game_over:
 		if Input.is_action_just_pressed("restart_after_game_over"):
-			GameManager.reset_game()
+			GameManager.reset_game(GameManager.level)
 			get_tree().reload_current_scene()
 	
 func _physics_process(delta: float) -> void:
@@ -45,16 +51,22 @@ func _physics_process(delta: float) -> void:
 			if collision:
 				velocity = velocity.bounce(collision.get_normal())
 				
-				if collision.get_collider().has_method("hit"):
+				if collision.get_collider().has_method("hit"): # brick
+					GameManager.current_combo += 1
+					GameManager.current_streak += 1
 					collision.get_collider().hit()
+				elif collision.get_collider().has_method("_handle_wider_paddle"):
+					if GameManager.current_combo > GameManager.longest_combo:
+						GameManager.longest_combo = GameManager.current_combo
+					GameManager.current_combo = 0
 			
 			# If we're not moving much in the y direction, spike it up in the air a bit
 			if (velocity.y > 0 and velocity.y < 100):
-				velocity.y = -200
+				velocity.y = -100
 			
 			# if we're stuck moving up and down, bump it to the side a bit
 			if abs(velocity.x) < 100:
-				velocity.x = -200
+				velocity.x = -100
 		else:
 			position.x = get_node("../paddleStatic").position.x
 	
@@ -66,7 +78,7 @@ func emit_died():
 	is_active = false
 	position.x = get_node("../paddleStatic").position.x
 	position.y = get_node("../paddleStatic").position.y - 53
-	velocity = Vector2(speed, speed)
+	velocity = speed * _get_random_velocity()
 	died.emit()
 	
 func _on_death_zone_body_entered(_body: Node2D) -> void:

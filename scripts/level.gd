@@ -11,12 +11,15 @@ var columns = 16
 var rows = 5
 var side_margin = 127
 var top_margin = 200
-var is_level_beaten := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	GameManager.connect_signals()
 	setup_level()
+	if GameManager.game_was_reset:
+		GameManager.game_was_reset = false
+		%PauseScreen.visible = false
+		get_tree().paused = false
 
 func setup_level():
 	var colors = get_colors()
@@ -63,14 +66,13 @@ func setup_level():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("skip_level"): # Q
+	if Input.is_action_just_pressed("skip_level"): # Shift + S
 		GameManager.add_level()
 		get_tree().reload_current_scene()
 		return
-	if Input.is_action_just_pressed("beat_level"): # R
-		get_tree().get_first_node_in_group("Brick").end_level()
-	if Input.is_action_just_pressed("launch") && is_level_beaten:
-		is_level_beaten = false
+	if Input.is_action_just_pressed("beat_level"): # Shift + R
+		end_level()
+		return
 	
 	var bricks_left = get_tree().get_nodes_in_group("Brick")
 	if bricks_left.size() == 0:
@@ -79,9 +81,9 @@ func _process(_delta: float) -> void:
 func end_level():
 	get_node("Ball").is_active = false
 	#await get_tree().create_timer(1).timeout
-	is_level_beaten = true
 	level_beaten.emit()
-	get_tree().reload_current_scene()
+	if (GameManager.level != GameManager.FINAL_LEVEL):
+		get_tree().reload_current_scene()
 	
 """
 `level` is 2D array describing the level
@@ -173,20 +175,20 @@ var level6 = [
 var level7 = [
 	[0,1,1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,0,0,1,1],
 	[0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,1],
-	[0,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,0,0,1],
+	[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 	[0,1,1,1,0,0,1,1,0,0,1,1,1,1,0,0,1,1,0,0,1,1,1],
 	[0,1,1,1,0,0,1,1,0,0,1,0,0,1,0,0,1,1,0,0,1,1,1],
-	[0,0,0,1,1,1,0,0,1,1,1,0,0,1,1,1,0,0,1,1,0,0,1],
+	[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 	[0,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1],
 ]
 
 var level8 = [
 	[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-	[0,1,0,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,0,0,1],
+	[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 	[0,1,0,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,0,0,1],
 	[0,1,1,1,0,0,1,1,0,0,1,1,1,1,0,0,1,1,0,0,1,1,1],
 	[0,1,1,1,0,0,1,1,0,0,1,1,1,1,0,0,1,1,0,0,1,1,1],
-	[0,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1],
+	[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 	[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ]
 

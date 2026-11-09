@@ -91,8 +91,9 @@ layout_mode = 2
 theme = ExtResource("2_27awe")
 text = "At the start of a level, use the RIGHT and 
 LEFT arrow keys to choose a starting 
-direction, then press ENTER to launch 
-the ball."
+position, then press ENTER to launch 
+the ball. The ball's starting direction is
+random."
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="TextureRect/VBoxContainer/HBoxContainer" unique_id=87353776]
 layout_mode = 2
@@ -181,4 +182,6 @@ text = "Press ESC to toggle pause
 
 Press TAB to pause and show this screen
 
-Press TAB to close this screen"
+Press TAB to close this screen
+
+Press Q to reset the game"

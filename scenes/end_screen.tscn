@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://dqc46u12h6670"]
+
+[ext_resource type="Script" uid="uid://de65cqold0rjx" path="res://scenes/end_screen.gd" id="1_6e1uj"]
+[ext_resource type="Texture2D" uid="uid://dqsj63y3sj8hk" path="res://assets/pause_screen.png" id="1_kq7ac"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6e1uj"]
+content_margin_top = 29.0
+bg_color = Color(0.012920001, 0.012920001, 0.012920001, 0.019000001)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jc7ji"]
+bg_color = Color(0.60038817, 0.60038817, 0.60038817, 0)
+
+[node name="EndScreen" type="Control" unique_id=1019827964]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6e1uj")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=65417697]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -740.0
+offset_top = -463.0
+offset_right = 741.0
+offset_bottom = 469.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_kq7ac")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect" unique_id=598746084]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="TextureRect/VBoxContainer" unique_id=1703708370]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxFlat_6e1uj")
+text = "Congratulations, you beat Brick Breaker!"
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect/VBoxContainer" unique_id=1485276526]
+layout_mode = 2
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="Label2" type="Label" parent="TextureRect/VBoxContainer/MarginContainer" unique_id=1201794972]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 54
+theme_override_styles/normal = SubResource("StyleBoxFlat_jc7ji")
+text = "Stats"
+
+[node name="StatsContainer" type="CenterContainer" parent="TextureRect/VBoxContainer" unique_id=1672716227]
+layout_mode = 2
+
+[node name="StatsLabel" type="Label" parent="TextureRect/VBoxContainer/StatsContainer" unique_id=1993138674]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 40
+
+[node name="MarginContainer2" type="MarginContainer" parent="TextureRect/VBoxContainer" unique_id=1285698025]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_top = 100
+
+[node name="Label" type="Label" parent="TextureRect/VBoxContainer/MarginContainer2" unique_id=718772477]
+process_mode = 3
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Press 'Q' to play again"

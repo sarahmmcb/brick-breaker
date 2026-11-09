@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b6lnxt3usn2fa" path="res://scenes/ball.tscn" id="2_w7c3h"]
 [ext_resource type="Texture2D" uid="uid://cqdslh2n3ut56" path="res://assets/background.jpg" id="4_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://r0o7uhr01cqm" path="res://scenes/paddle_static.tscn" id="5_ppgk2"]
+[ext_resource type="PackedScene" uid="uid://dqc46u12h6670" path="res://scenes/end_screen.tscn" id="6_2r41h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w7c3h"]
 size = Vector2(25, 1546)
@@ -63,5 +64,7 @@ position = Vector2(952, 774)
 
 [node name="PauseScreen" parent="CanvasLayer" unique_id=1893922536 instance=ExtResource("2_ppgk2")]
 unique_name_in_owner = true
+
+[node name="EndScreen" parent="CanvasLayer" unique_id=1019827964 instance=ExtResource("6_2r41h")]
 
 [connection signal="body_entered" from="DeathZone" to="Ball" method="_on_death_zone_body_entered"]

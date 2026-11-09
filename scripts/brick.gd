@@ -8,7 +8,7 @@ var has_been_hit := false
 const blast_radius := 75.0 * 3.0 # (brick_width plus a little extra) * multiplier
 
 func award_extra_life():
-	if (GameManager.score % 100 == 0 && GameManager.extra_lives < 3):
+	if GameManager.score % 100 == 0:
 		GameManager.add_life()
 		GameManager.set_lives_label()
 

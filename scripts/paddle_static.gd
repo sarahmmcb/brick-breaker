@@ -74,9 +74,6 @@ func _handle_wider_paddle(time: float):
 		%PowerupLabel.text = _get_powerup_time_left()
 		%PowerupLabel.visible = true
 				
-func reset_paddle_size():
-	pass
-
 func _get_powerup_time_left():
 	return str(int(%PowerupTimer.time_left))
 		
